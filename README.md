@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain and Mind Academy - Chapter 1 Functions Review Learning Sheet</title>
+    <!-- Desmos API Script -->
+    <script src="https://www.desmos.com/api/v1.8/calculator.js?apiKey=d2822b107a6c49f6a00a221957776319"></script>
+    <style>
+        :root {
+            --primary-header: #1e3a8a;
+            --header-gradient: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            --accent-gold: #d97706;
+            --accent-gold-light: #fcd34d;
+            --correct-green: #059669;
+            --correct-bg: #d1fae5;
+            --incorrect-red: #dc2626;
+            --incorrect-bg: #fee2e2;
+            --skipped-orange: #f59e0b;
+            --skipped-bg: #fef3c7;
+            --bg-body: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .brand-subtitle {
+            font-size: 0.85rem;
+            color: var(--accent-gold-light);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-email {
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+        }
+
+        .btn {
+            padding: 0.6rem 1.25rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.85rem;
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+
+        .btn-primary { background-color: var(--primary-header); color: white; }
+        .btn-primary:hover { background-color: #172554; }
+        .btn-gold { background-color: var(--accent-gold); color: white; }
+        .btn-gold:hover { background-color: #b45309; }
+        .btn-outline { background: transparent; border: 1.5px solid var(--border-color); color: var(--text-dark); }
+        .btn-outline:hover { background-color: #f1f5f9; }
+        .btn-danger { background-color: var(--incorrect-red); color: white; }
+        .btn-danger:hover { background-color: #b91c1c; }
+        .btn-success { background-color: var(--correct-green); color: white; }
+        .btn-success:hover { background-color: #047857; }
+
+        .screen {
+            display: none;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        .screen.active { display: block; }
+
+        #auth-screen {
+            max-width: 450px;
+            margin: auto;
+            padding-top: 4rem;
+        }
+
+        .auth-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .auth-card h2 { margin-bottom: 0.5rem; color: var(--primary-header); }
+        .auth-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+        .form-group { margin-bottom: 1.25rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; }
+        .form-group input {
+            width: 100%; padding: 0.75rem; border: 1px solid var(--border-color);
+            border-radius: 6px; font-size: 1rem; outline: none;
+        }
+        .form-group input:focus { border-color: var(--primary-header); box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
+
+        .quiz-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--bg-body);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .q-badge {
+            background: #eff6ff;
+            color: var(--primary-header);
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .q-title {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            color: var(--primary-header);
+        }
+
+        .problem-statement {
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary-header);
+            padding: 1rem 1.25rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .scale-graph-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        /* Micro Step Blocks */
+        .step-block {
+            background: #f8fafc;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-block.locked {
+            opacity: 0.4;
+            pointer-events: none;
+            filter: grayscale(0.8);
+        }
+
+        .step-block.active-step {
+            border-color: var(--primary-header);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        .step-block.completed-step {
+            border-color: var(--correct-green);
+            background-color: #f0fdf4;
+        }
+
+        .step-block.skipped-step {
+            border-color: var(--skipped-orange);
+            background-color: var(--skipped-bg);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-tag {
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent-gold);
+        }
+
+        .completed-step .step-tag { color: var(--correct-green); }
+        .skipped-step .step-tag { color: var(--skipped-orange); }
+
+        .step-prompt {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .step-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .step-options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-option-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .step-option-item:hover:not(.disabled) {
+            border-color: var(--primary-header);
+            background-color: #eff6ff;
+        }
+
+        .step-option-item.selected {
+            border-color: var(--primary-header);
+            background-color: #eff6ff;
+        }
+
+        .step-option-item.correct {
+            border-color: var(--correct-green);
+            background-color: var(--correct-bg);
+            color: #065f46;
+        }
+
+        .step-option-item.incorrect {
+            border-color: var(--incorrect-red);
+            background-color: var(--incorrect-bg);
+            color: #991b1b;
+        }
+
+        .step-option-item.disabled { cursor: default; }
+
+        .step-opt-prefix {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .step-option-item.selected .step-opt-prefix { background: var(--primary-header); color: white; }
+        .step-option-item.correct .step-opt-prefix { background: var(--correct-green); color: white; }
+        .step-option-item.incorrect .step-opt-prefix { background: var(--incorrect-red); color: white; }
+
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .rationale-box {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 8px;
+            background: #f1f5f9;
+            border-left: 4px solid var(--primary-header);
+        }
+
+        .rationale-title { font-weight: 700; color: var(--primary-header); margin-bottom: 0.5rem; }
+
+        .quiz-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .sidebar-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-header);
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
+        }
+
+        .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+        .dot-active { border: 2px solid var(--primary-header); background: transparent; }
+        .dot-attempted { background: var(--correct-green); }
+        .dot-skipped { background: var(--skipped-orange); }
+        .dot-unvisited { background: #cbd5e1; }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            max-height: 220px;
+            overflow-y: auto;
+        }
+
+        .grid-btn {
+            aspect-ratio: 1; border: 1px solid var(--border-color); background: #f8fafc;
+            color: var(--text-dark); border-radius: 6px; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; transition: all 0.15s ease;
+        }
+
+        .grid-btn.active { border: 2px solid var(--primary-header); color: var(--primary-header); font-weight: 800; background: #eff6ff; }
+        .grid-btn.attempted { background: var(--correct-green); color: white; border-color: var(--correct-green); }
+        .grid-btn.skipped { background: var(--skipped-orange); color: white; border-color: var(--skipped-orange); }
+
+        /* Calculator */
+        .calc-display {
+            width: 100%;
+            padding: 0.6rem;
+            font-size: 1.2rem;
+            text-align: right;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            background: #f8fafc;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.35rem;
+        }
+
+        .calc-btn {
+            padding: 0.55rem 0.2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .calc-btn:hover { background: #e2e8f0; }
+        .calc-btn.op { background: #eff6ff; color: var(--primary-header); }
+        .calc-btn.special { background: var(--skipped-bg); color: var(--accent-gold); }
+
+        #desmos-calculator {
+            width: 100%;
+            height: 280px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .results-summary {
+            background: var(--card-bg); border-radius: 12px; padding: 2rem;
+            border: 1px solid var(--border-color); margin-bottom: 2rem; text-align: center;
+        }
+
+        .score-circle {
+            width: 130px; height: 130px; border-radius: 50%; background: var(--header-gradient);
+            color: white; display: flex; flex-direction: column; align-items: center;
+            justify-content: center; margin: 1rem auto;
+        }
+
+        .score-num { font-size: 2.2rem; font-weight: 800; color: var(--accent-gold-light); }
+        .review-list { display: flex; flex-direction: column; gap: 1.5rem; }
+        .review-card { background: var(--card-bg); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border-color); }
+
+        .status-tag {
+            padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem;
+            font-weight: 700; text-transform: uppercase;
+        }
+
+        .tag-correct { background: var(--correct-bg); color: #065f46; }
+        .tag-incorrect { background: var(--incorrect-bg); color: #991b1b; }
+        .tag-skipped { background: var(--skipped-bg); color: #92400e; }
+
+        @media (max-width: 992px) {
+            .quiz-container { grid-template-columns: 1fr; }
+            .quiz-sidebar { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <div class="brand-title">BRAIN AND MIND ACADEMY</div>
+            <div class="brand-subtitle">MCR3U Chapter 1 Review: Functions, Domain, Range, Inverses & Transformations</div>
+        </div>
+        <div class="user-info" id="user-header-info" style="display: none;">
+            <span class="user-email" id="display-user-email"></span>
+            <button class="btn btn-outline" style="color:white; border-color:rgba(255,255,255,0.3);" onclick="logout()">Switch User</button>
+        </div>
+    </header>
+
+    <!-- Auth Screen -->
+    <div id="auth-screen" class="screen active">
+        <div class="auth-card">
+            <h2>Student Portal</h2>
+            <p>Enter your student email to access your step-by-step interactive learning sheet.</p>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email-input">Email ID</label>
+                    <input type="email" id="email-input" required placeholder="student@academy.edu">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Start Chapter 1 Review Sheet</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="screen">
+        <div class="quiz-container">
+            <div class="quiz-card">
+                <div class="quiz-header">
+                    <span class="q-badge" id="q-number-badge">Card 1 of 19</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Guided Step-by-Step Worksheet</span>
+                </div>
+
+                <div class="q-title" id="q-title-text"></div>
+                <div class="problem-statement" id="q-problem-text"></div>
+                <div class="scale-graph-container" id="q-graph-container" style="display: none;"></div>
+
+                <!-- STEP 1 BLOCK -->
+                <div class="step-block active-step" id="step1-block">
+                    <div class="step-header">
+                        <span class="step-tag" id="step1-tag">Step 1: Domain Analysis</span>
+                        <span id="step1-status-tag" style="font-weight:700; font-size:0.8rem; color:var(--accent-gold);">In Progress</span>
+                    </div>
+                    <div class="step-prompt" id="step1-prompt"></div>
+                    <div class="step-options-list" id="step1-options-container"></div>
+                    <div class="step-actions" id="step1-actions">
+                        <button class="btn btn-primary btn-sm" onclick="checkStep(1)">Check Step 1</button>
+                        <button class="btn btn-gold btn-sm" onclick="skipStep(1)">Skip Step 1</button>
+                    </div>
+                </div>
+
+                <!-- STEP 2 BLOCK -->
+                <div class="step-block locked" id="step2-block">
+                    <div class="step-header">
+                        <span class="step-tag" id="step2-tag">Step 2: Range Analysis</span>
+                        <span id="step2-status-tag" style="font-weight:700; font-size:0.8rem; color:var(--text-muted);">Locked</span>
+                    </div>
+                    <div class="step-prompt" id="step2-prompt"></div>
+                    <div class="step-options-list" id="step2-options-container"></div>
+                    <div class="step-actions" id="step2-actions" style="display:none;">
+                        <button class="btn btn-primary btn-sm" onclick="checkStep(2)">Check Step 2</button>
+                        <button class="btn btn-gold btn-sm" onclick="skipStep(2)">Skip Step 2</button>
+                    </div>
+                </div>
+
+                <!-- STEP 3 BLOCK -->
+                <div class="step-block locked" id="step3-block">
+                    <div class="step-header">
+                        <span class="step-tag" id="step3-tag">Step 3: Verification & Properties</span>
+                        <span id="step3-status-tag" style="font-weight:700; font-size:0.8rem; color:var(--text-muted);">Locked</span>
+                    </div>
+                    <div class="step-prompt" id="step3-prompt"></div>
+                    <div class="step-options-list" id="step3-options-container"></div>
+                    <div class="step-actions" id="step3-actions" style="display:none;">
+                        <button class="btn btn-primary btn-sm" onclick="checkStep(3)">Check Step 3</button>
+                        <button class="btn btn-gold btn-sm" onclick="skipStep(3)">Skip Step 3</button>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-danger" id="skip-card-btn" onclick="skipEntireCard()">Skip Entire Card</button>
+                    <button class="btn btn-outline" id="next-btn" style="display: none;" onclick="nextQuestion()">Next Card &rarr;</button>
+                </div>
+
+                <div class="rationale-box" id="rationale-container" style="display: none;">
+                    <div class="rationale-title">Step-by-Step Mathematical Solution</div>
+                    <div id="rationale-text" style="font-size: 0.95rem; line-height: 1.6;"></div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="quiz-sidebar">
+                <div class="sidebar-card">
+                    <div class="sidebar-title">Question Palette (1–19)</div>
+                    <div class="legend-grid">
+                        <div class="legend-item"><div class="legend-dot dot-active"></div> Active</div>
+                        <div class="legend-item"><div class="legend-dot dot-attempted"></div> Submitted</div>
+                        <div class="legend-item"><div class="legend-dot dot-skipped"></div> Skipped</div>
+                        <div class="legend-item"><div class="legend-dot dot-unvisited"></div> Unvisited</div>
+                    </div>
+                    <div class="question-grid" id="question-grid"></div>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn btn-danger" style="width: 100%;" onclick="finishTest()">Finish & Submit Sheet</button>
+                    </div>
+                </div>
+
+                <!-- Desmos Graphing Calculator Embed -->
+                <div class="sidebar-card">
+                    <div class="sidebar-title" style="margin-bottom:0.5rem;">Desmos Graph Plotter</div>
+                    <div id="desmos-calculator"></div>
+                </div>
+
+                <!-- Scientific Calculator -->
+                <div class="sidebar-card">
+                    <div class="sidebar-title" style="margin-bottom:0.5rem;">Scientific Calculator</div>
+                    <input type="text" class="calc-display" id="calc-disp" readonly value="0">
+                    <div class="calc-grid">
+                        <button class="calc-btn special" onclick="calcSqrt()">√x</button>
+                        <button class="calc-btn special" onclick="calcInput('**2')">x²</button>
+                        <button class="calc-btn special" onclick="calcInput('**3')">x³</button>
+                        <button class="calc-btn op" onclick="calcClear()">C</button>
+
+                        <button class="calc-btn" onclick="calcInput('7')">7</button>
+                        <button class="calc-btn" onclick="calcInput('8')">8</button>
+                        <button class="calc-btn" onclick="calcInput('9')">9</button>
+                        <button class="calc-btn op" onclick="calcInput('/')">÷</button>
+                        
+                        <button class="calc-btn" onclick="calcInput('4')">4</button>
+                        <button class="calc-btn" onclick="calcInput('5')">5</button>
+                        <button class="calc-btn" onclick="calcInput('6')">6</button>
+                        <button class="calc-btn op" onclick="calcInput('*')">×</button>
+                        
+                        <button class="calc-btn" onclick="calcInput('1')">1</button>
+                        <button class="calc-btn" onclick="calcInput('2')">2</button>
+                        <button class="calc-btn" onclick="calcInput('3')">3</button>
+                        <button class="calc-btn op" onclick="calcInput('-')">-</button>
+                        
+                        <button class="calc-btn" onclick="calcInput('0')">0</button>
+                        <button class="calc-btn" onclick="calcInput('.')">.</button>
+                        <button class="calc-btn op" onclick="calcInput('+')">+</button>
+                        <button class="calc-btn op" onclick="calcEval()">=</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Screen -->
+    <div id="review-screen" class="screen">
+        <div class="results-summary">
+            <h2>Performance Summary</h2>
+            <div class="score-circle">
+                <span class="score-num" id="final-score">0 / 19</span>
+                <span style="font-size: 0.8rem; opacity: 0.8;">Score</span>
+            </div>
+            <button class="btn btn-primary" onclick="restartQuiz()">Retake Learning Sheet</button>
+        </div>
+
+        <h3 style="margin-bottom: 1rem; color: var(--primary-header);">Step-by-Step Worksheet Review</h3>
+        <div class="review-list" id="review-list"></div>
+    </div>
+
+    <script>
+        const AudioFX = {
+            ctx: null,
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            },
+            playCorrectBell() {
+                this.init();
+                const now = this.ctx.currentTime;
+                const playSingleBell = (freq, time, duration) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, time);
+
+                    gain.gain.setValueAtTime(0, time);
+                    gain.gain.linearRampToValueAtTime(0.3, time + 0.01);
+                    gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+
+                    osc.start(time);
+                    osc.stop(time + duration);
+                };
+
+                playSingleBell(880, now, 0.8);        
+                playSingleBell(1318.51, now + 0.12, 1.2); 
+            },
+            playIncorrectBell() {
+                this.init();
+                const now = this.ctx.currentTime;
+
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(220, now); 
+
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.35, now + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.6);
+            },
+            playSkipChime() {
+                this.init();
+                const now = this.ctx.currentTime;
+
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); 
+                osc.frequency.exponentialRampToValueAtTime(392, now + 0.15); 
+
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.15);
+            }
+        };
+
+        const CHAPTER_KEY = "CHAPTER_NIYATI_EXTRA_PRACTICE_PROGRESSIVE_SHEET";
+
+        // Accurate SVG Coordinate Grid Scale Generator
+        function generateGridSVG(elements, xRange = [-5, 5], yRange = [-5, 5]) {
+            const width = 280;
+            const height = 280;
+            const pad = 25;
+            const plotW = width - 2 * pad;
+            const plotH = height - 2 * pad;
+            
+            const toX = val => pad + ((val - xRange[0]) / (xRange[1] - xRange[0])) * plotW;
+            const toY = val => pad + ((yRange[1] - val) / (yRange[1] - yRange[0])) * plotH;
+
+            let gridLines = '';
+            for (let x = xRange[0]; x <= xRange[1]; x++) {
+                gridLines += `<line x1="${toX(x)}" y1="${pad}" x2="${toX(x)}" y2="${height - pad}" stroke="#e2e8f0" stroke-width="1"/>`;
+                if (x !== 0 && x >= -4 && x <= 4) {
+                    gridLines += `<text x="${toX(x)}" y="${toY(0) + 12}" font-size="8" text-anchor="middle" fill="#64748b">${x}</text>`;
+                }
+            }
+            for (let y = yRange[0]; y <= yRange[1]; y++) {
+                gridLines += `<line x1="${pad}" y1="${toY(y)}" x2="${width - pad}" y2="${toY(y)}" stroke="#e2e8f0" stroke-width="1"/>`;
+                if (y !== 0 && y >= -4 && y <= 4) {
+                    gridLines += `<text x="${toX(0) - 6}" y="${toY(y) + 3}" font-size="8" text-anchor="end" fill="#64748b">${y}</text>`;
+                }
+            }
+
+            const xAxis = `<line x1="${pad - 10}" y1="${toY(0)}" x2="${width - pad + 10}" y2="${toY(0)}" stroke="#334155" stroke-width="1.75"/>
+                           <text x="${width - pad + 14}" y="${toY(0) + 3}" font-size="10" font-weight="bold" fill="#334155">x</text>`;
+            const yAxis = `<line x1="${toX(0)}" y1="${height - pad + 10}" x2="${toX(0)}" y2="${pad - 10}" stroke="#334155" stroke-width="1.75"/>
+                           <text x="${toX(0) + 4}" y="${pad - 12}" font-size="10" font-weight="bold" fill="#334155">y</text>`;
+
+            let content = '';
+            elements.forEach(el => {
+                if (el.type === 'curve') {
+                    let d = '';
+                    const step = 0.05;
+                    let first = true;
+                    for (let x = el.min; x <= el.max; x += step) {
+                        const y = el.fn(x);
+                        if (y >= yRange[0] - 0.5 && y <= yRange[1] + 0.5) {
+                            d += `${first ? 'M' : 'L'} ${toX(x).toFixed(1)} ${toY(y).toFixed(1)} `;
+                            first = false;
+                        } else {
+                            first = true;
+                        }
+                    }
+                    content += `<path d="${d}" fill="none" stroke="${el.color}" stroke-width="${el.width || 2.5}"/>`;
+                } else if (el.type === 'circle') {
+                    content += `<circle cx="${toX(el.cx)}" cy="${toY(el.cy)}" r="${el.r * (plotW / (xRange[1] - xRange[0]))}" fill="none" stroke="${el.color}" stroke-width="2.5"/>`;
+                }
+            });
+
+            return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${gridLines}${xAxis}${yAxis}${content}</svg>`;
+        }
+
+        // Questions from Chapter 1 Review Extra Practice
+        const questionsData = [
+            // Card 1: 1a
+            {
+                id: 1,
+                desmosLatex: '((0,2),(2,0),(1,0),(3,0),(4,0))',
+                title: "Card 1 (Question 1a): Ordered Pairs Relation",
+                problem: "For the relation {(0, 2), (2, 0), (1, 0), (3, 0), (4, 0)}, determine the domain, the range, and whether the relation is a function.",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Domain Analysis",
+                    prompt: "Extract the set of all input x-coordinates in ascending order:",
+                    options: [
+                        "Domain: {x = 0, 1, 2, 3, 4}",
+                        "Domain: {x = 0, 2}",
+                        "Domain: {x ∈ ℝ}",
+                        "Domain: {x = 1, 2, 3, 4}"
+                    ],
+                    correct: 0 // A
+                },
+                step2: {
+                    tag: "Step 2: Range Analysis",
+                    prompt: "Extract the set of all output y-coordinates in ascending order:",
+                    options: [
+                        "Range: {y = 0, 1, 2, 3, 4}",
+                        "Range: {y = 0, 2}",
+                        "Range: {y = 2}",
+                        "Range: {y ∈ ℝ}"
+                    ],
+                    correct: 1 // B
+                },
+                step3: {
+                    tag: "Step 3: Function Verification",
+                    prompt: "Determine whether the relation is a function:",
+                    options: [
+                        "It is not a function because y = 0 repeats multiple times.",
+                        "It is not a function because 0 maps to 2.",
+                        "It is a function because each input x-value corresponds to exactly one output y-value.",
+                        "It is not a function because it is not continuous."
+                    ],
+                    correct: 2 // C
+                },
+                rationale: "<b>Step 1:</b> The domain is the set of first elements: {0, 1, 2, 3, 4}.<br><b>Step 2:</b> The range is the set of second elements: {0, 2}.<br><b>Step 3:</b> Since no x-value is assigned to more than one y-value, the relation is a function."
+            },
+            // Card 2: 1b
+            {
+                id: 2,
+                desmosLatex: '(x+4)^2+(y+5)^2=25',
+                title: "Card 2 (Question 1b): Circle Relation",
+                problem: "For the relation (x + 4)^2 + (y + 5)^2 = 25, determine the domain, the range, and whether the relation is a function.",
+                graphSVG: generateGridSVG([
+                    { type: 'circle', cx: -4, cy: -5, r: 5, color: '#1e3a8a' }
+                ], [-10, 2], [-11, 1]),
+                step1: {
+                    tag: "Step 1: Domain Analysis",
+                    prompt: "The circle has center (-4, -5) and radius r = √25 = 5. Find horizontal extent [-4 - 5, -4 + 5]:",
+                    options: [
+                        "Domain: {x ∈ ℝ | -4 ≤ x ≤ 5}",
+                        "Domain: {x ∈ ℝ | -9 ≤ x ≤ 1}",
+                        "Domain: {x ∈ ℝ | -5 ≤ x ≤ 5}",
+                        "Domain: {x ∈ ℝ}"
+                    ],
+                    correct: 1 // B
+                },
+                step2: {
+                    tag: "Step 2: Range Analysis",
+                    prompt: "Find the vertical extent [-5 - 5, -5 + 5]:",
+                    options: [
+                        "Range: {y ∈ ℝ | -5 ≤ y ≤ 0}",
+                        "Range: {y ∈ ℝ | -9 ≤ y ≤ 1}",
+                        "Range: {y ∈ ℝ}",
+                        "Range: {y ∈ ℝ | -10 ≤ y ≤ 0}"
+                    ],
+                    correct: 3 // D
+                },
+                step3: {
+                    tag: "Step 3: Function Verification",
+                    prompt: "Does this circular relation pass the vertical line test?",
+                    options: [
+                        "It is not a function because vertical lines through the circle intersect it at two points.",
+                        "It is a function because it is symmetrical.",
+                        "It is a function because radius is 5.",
+                        "It is not a function because the center is in quadrant 3."
+                    ],
+                    correct: 0 // A
+                },
+                rationale: "<b>Step 1:</b> Center = (-4, -5), radius = 5. Domain = [-4 - 5, -4 + 5] = [-9, 1].<br><b>Step 2:</b> Range = [-5 - 5, -5 + 5] = [-10, 0].<br><b>Step 3:</b> A vertical line through x = -4 intersects the circle at y = 0 and y = -10, so it is NOT a function."
+            },
+            // Card 3: 1c
+            {
+                id: 3,
+                desmosLatex: 'y=|x+2|-3',
+                title: "Card 3 (Question 1c): Absolute Value Graph Relation",
+                problem: "For the V-shaped absolute value relation shown in the graph (vertex at (-2, -3)), determine the domain, the range, and whether the relation is a function.",
+                graphSVG: generateGridSVG([
+                    { type: 'curve', fn: x => Math.abs(x + 2) - 3, min: -5, max: 5, color: '#1e3a8a' }
+                ], [-5, 5], [-5, 5]),
+                step1: {
+                    tag: "Step 1: Domain Analysis",
+                    prompt: "Identify the set of all real x-values covered by the arrows pointing outwards:",
+                    options: [
+                        "Domain: {x ∈ ℝ | x ≥ -2}",
+                        "Domain: {x ∈ ℝ | -2 ≤ x ≤ 3}",
+                        "Domain: {x ∈ ℝ}",
+                        "Domain: {x ∈ ℝ | x ≥ -3}"
+                    ],
+                    correct: 2 // C
+                },
+                step2: {
+                    tag: "Step 2: Range Analysis",
+                    prompt: "Identify the minimum vertex y-value and upward vertical extent:",
+                    options: [
+                        "Range: {y ∈ ℝ | y ≥ -3}",
+                        "Range: {y ∈ ℝ | y ≥ -2}",
+                        "Range: {y ∈ ℝ}",
+                        "Range: {y ∈ ℝ | -3 ≤ y ≤ 3}"
+                    ],
+                    correct: 0 // A
+                },
+                step3: {
+                    tag: "Step 3: Function Verification",
+                    prompt: "Apply the vertical line test to the V-shaped graph:",
+                    options: [
+                        "It is not a function because it has two linear branches.",
+                        "It is a function because every vertical line touches the graph at exactly one point.",
+                        "It is not a function because it has a vertex.",
+                        "It is a function because it opens upwards."
+                    ],
+                    correct: 1 // B
+                },
+                rationale: "<b>Step 1:</b> The graph extends infinitely to the left and right, so Domain = {x ∈ ℝ}.<br><b>Step 2:</b> The lowest point is the vertex (-2, -3), so Range = {y ∈ ℝ | y ≥ -3}.<br><b>Step 3:</b> Any vertical line crosses the graph at only one point, so it IS a function."
+            },
+            // Card 4: 1d
+            {
+                id: 4,
+                desmosLatex: 'y=-2x-7',
+                title: "Card 4 (Question 1d): Linear Relation y = -2x - 7",
+                problem: "For the linear relation y = -2x - 7, determine the domain, the range, and whether the relation is a function.",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Domain Analysis",
+                    prompt: "Determine the domain of the non-vertical linear equation:",
+                    options: [
+                        "Domain: {x ∈ ℝ | x ≠ -7}",
+                        "Domain: {x ∈ ℝ | x ≥ -7}",
+                        "Domain: {x ∈ ℝ | x ≠ -2}",
+                        "Domain: {x ∈ ℝ}"
+                    ],
+                    correct: 3 // D
+                },
+                step2: {
+                    tag: "Step 2: Range Analysis",
+                    prompt: "Determine the range of the linear equation:",
+                    options: [
+                        "Range: {y ∈ ℝ}",
+                        "Range: {y ∈ ℝ | y ≤ -7}",
+                        "Range: {y ∈ ℝ | y ≠ -7}",
+                        "Range: {y ∈ ℝ | y ≥ 0}"
+                    ],
+                    correct: 0 // A
+                },
+                step3: {
+                    tag: "Step 3: Function Verification",
+                    prompt: "Determine if the line y = -2x - 7 is a function:",
+                    options: [
+                        "It is not a function because it has a negative slope.",
+                        "It is a function because it is a non-vertical line that passes the vertical line test.",
+                        "It is not a function because y-intercept is negative.",
+                        "It is a function only for positive numbers."
+                    ],
+                    correct: 1 // B
+                },
+                rationale: "<b>Step 1:</b> Polynomial/linear functions have no restrictions on x: Domain = {x ∈ ℝ}.<br><b>Step 2:</b> As x spans real numbers, y spans all real numbers: Range = {y ∈ ℝ}.<br><b>Step 3:</b> Every input x produces a unique output y, so it IS a function."
+            },
+            // Card 5: 2a & 2b
+            {
+                id: 5,
+                desmosLatex: 'f(x)=5x+6',
+                title: "Card 5 (Questions 2a & 2b): Evaluating f(-5) and f(0)",
+                problem: "Given f(x) = 5x + 6 and g(x) = 4x - 3, evaluate f(-5) and f(0).",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Evaluate f(-5)",
+                    prompt: "Substitute x = -5 into f(x) = 5x + 6: 5(-5) + 6 = -25 + 6 =",
+                    options: [
+                        "f(-5) = -31",
+                        "f(-5) = -19",
+                        "f(-5) = 19",
+                        "f(-5) = -25"
+                    ],
+                    correct: 1 // B
+                },
+                step2: {
+                    tag: "Step 2: Evaluate f(0)",
+                    prompt: "Substitute x = 0 into f(x) = 5x + 6: 5(0) + 6 =",
+                    options: [
+                        "f(0) = 0",
+                        "f(0) = 5",
+                        "f(0) = 6",
+                        "f(0) = 11"
+                    ],
+                    correct: 2 // C
+                },
+                step3: {
+                    tag: "Step 3: Verification",
+                    prompt: "Interpret the ordered pairs corresponding to these outputs:",
+                    options: [
+                        "(-5, -19) and (0, 6) are points on the line y = 5x + 6.",
+                        "(-5, 6) and (0, -19) are points on the line.",
+                        "(19, -5) and (6, 0) are points on the line.",
+                        "Neither point lies on the graph."
+                    ],
+                    correct: 0 // A
+                },
+                rationale: "<b>Step 1:</b> f(-5) = 5(-5) + 6 = -25 + 6 = -19.<br><b>Step 2:</b> f(0) = 5(0) + 6 = 6.<br><b>Step 3:</b> The corresponding points on the graph are (-5, -19) and (0, 6)."
+            },
+            // Card 6: 2c & 2d
+            {
+                id: 6,
+                desmosLatex: 'g(x)=4x-3',
+                title: "Card 6 (Questions 2c & 2d): Evaluating g(3/4) and g(3a)",
+                problem: "Given g(x) = 4x - 3, evaluate g(3/4) and g(3a).",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Evaluate g(3/4)",
+                    prompt: "Substitute x = 3/4 into g(x) = 4x - 3: 4(3/4) - 3 = 3 - 3 =",
+                    options: [
+                        "g(3/4) = 3",
+                        "g(3/4) = -3",
+                        "g(3/4) = 1",
+                        "g(3/4) = 0"
+                    ],
+                    correct: 3 // D
+                },
+                step2: {
+                    tag: "Step 2: Evaluate g(3a)",
+                    prompt: "Substitute the algebraic input x = 3a into g(x) = 4(3a) - 3:",
+                    options: [
+                        "g(3a) = 12a - 3",
+                        "g(3a) = 7a - 3",
+                        "g(3a) = 12a - 9",
+                        "g(3a) = 3a - 3"
+                    ],
+                    correct: 0 // A
+                },
+                step3: {
+                    tag: "Step 3: Property Check",
+                    prompt: "What does g(3/4) = 0 indicate about the graph of g(x)?",
+                    options: [
+                        "The y-intercept is 3/4.",
+                        "The x-intercept of g(x) is x = 3/4.",
+                        "The slope of g(x) is 0.",
+                        "The function has an asymptote at 3/4."
+                    ],
+                    correct: 1 // B
+                },
+                rationale: "<b>Step 1:</b> g(3/4) = 4(3/4) - 3 = 3 - 3 = 0.<br><b>Step 2:</b> g(3a) = 4(3a) - 3 = 12a - 3.<br><b>Step 3:</b> Since g(3/4) = 0, (3/4, 0) is the x-intercept."
+            },
+            // Card 7: 2e & 2f
+            {
+                id: 7,
+                desmosLatex: 'f(x)=5x+6',
+                title: "Card 7 (Questions 2e & 2f): Evaluating f(-b - 4) and Difference f(3) - f(-3)",
+                problem: "Given f(x) = 5x + 6, evaluate the expression f(-b - 4) and the difference f(3) - f(-3).",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Evaluate f(-b - 4)",
+                    prompt: "Substitute (-b - 4) into f(x) = 5(-b - 4) + 6 = -5b - 20 + 6:",
+                    options: [
+                        "f(-b - 4) = -5b - 26",
+                        "f(-b - 4) = -5b - 14",
+                        "f(-b - 4) = -5b + 10",
+                        "f(-b - 4) = 5b - 14"
+                    ],
+                    correct: 1 // B
+                },
+                step2: {
+                    tag: "Step 2: Calculate f(3) and f(-3)",
+                    prompt: "Compute f(3) = 5(3) + 6 and f(-3) = 5(-3) + 6:",
+                    options: [
+                        "f(3) = 21 and f(-3) = -9",
+                        "f(3) = 15 and f(-3) = -15",
+                        "f(3) = 21 and f(-3) = 9",
+                        "f(3) = 11 and f(-3) = -9"
+                    ],
+                    correct: 0 // A
+                },
+                step3: {
+                    tag: "Step 3: Compute Difference",
+                    prompt: "Calculate f(3) - f(-3) = 21 - (-9):",
+                    options: [
+                        "12",
+                        "-30",
+                        "30",
+                        "18"
+                    ],
+                    correct: 2 // C
+                },
+                rationale: "<b>Step 1:</b> f(-b - 4) = 5(-b - 4) + 6 = -5b - 20 + 6 = -5b - 14.<br><b>Step 2:</b> f(3) = 21 and f(-3) = -9.<br><b>Step 3:</b> f(3) - f(-3) = 21 - (-9) = 30."
+            },
+            // Card 8: 3a
+            {
+                id: 8,
+                desmosLatex: 'f(x)=\\sqrt{x-5}',
+                title: "Card 8 (Question 3a): Domain and Range of Radical Function f(x) = √(x - 5)",
+                problem: "State the domain and range of the function f(x) = √(x - 5).",
+                graphSVG: generateGridSVG([
+                    { type: 'curve', fn: x => Math.sqrt(Math.max(0, x - 5)), min: 5, max: 9, color: '#1e3a8a' }
+                ], [0, 10], [-1, 5]),
+                step1: {
+                    tag: "Step 1: Domain Restriction",
+                    prompt: "The radicand under a square root must be non-negative (x - 5 ≥ 0). State the domain:",
+                    options: [
+                        "Domain: {x ∈ ℝ | x ≥ 0}",
+                        "Domain: {x ∈ ℝ | x ≠ 5}",
+                        "Domain: {x ∈ ℝ | x ≥ 5}",
+                        "Domain: {x ∈ ℝ | x ≤ 5}"
+                    ],
+                    correct: 2 // C
+                },
+                step2: {
+                    tag: "Step 2: Range Determination",
+                    prompt: "The principal square root function always yields non-negative values. State the range:",
+                    options: [
+                        "Range: {y ∈ ℝ | y ≥ 0}",
+                        "Range: {y ∈ ℝ | y ≥ 5}",
+                        "Range: {y ∈ ℝ}",
+                        "Range: {y ∈ ℝ | y > 0}"
+                    ],
+                    correct: 0 // A
+                },
+                step3: {
+                    tag: "Step 3: Endpoint Coordinates",
+                    prompt: "Identify the starting point coordinate of this radical curve:",
+                    options: [
+                        "(0, 5)",
+                        "(5, 0)",
+                        "(-5, 0)",
+                        "(0, 0)"
+                    ],
+                    correct: 1 // B
+                },
+                rationale: "<b>Step 1:</b> Under real numbers, x - 5 ≥ 0 ⇒ x ≥ 5. Domain = {x ∈ ℝ | x ≥ 5}.<br><b>Step 2:</b> √(x - 5) outputs values starting from 0 upwards: Range = {y ∈ ℝ | y ≥ 0}.<br><b>Step 3:</b> The starting endpoint is (5, 0)."
+            },
+            // Card 9: 3b
+            {
+                id: 9,
+                desmosLatex: 'f(x)=-(x+4)^2-4',
+                title: "Card 9 (Question 3b): Domain and Range of Quadratic f(x) = -(x + 4)^2 - 4",
+                problem: "State the domain and range of the quadratic function f(x) = -(x + 4)^2 - 4.",
+                graphSVG: generateGridSVG([
+                    { type: 'curve', fn: x => -Math.pow(x + 4, 2) - 4, min: -7, max: -1, color: '#1e3a8a' }
+                ], [-8, 2], [-10, 0]),
+                step1: {
+                    tag: "Step 1: Domain Determination",
+                    prompt: "Determine the domain of the quadratic polynomial function:",
+                    options: [
+                        "Domain: {x ∈ ℝ | x ≤ -4}",
+                        "Domain: {x ∈ ℝ}",
+                        "Domain: {x ∈ ℝ | x ≥ -4}",
+                        "Domain: {x ∈ ℝ | -4 ≤ x ≤ 4}"
+                    ],
+                    correct: 1 // B
+                },
+                step2: {
+                    tag: "Step 2: Vertex & Direction",
+                    prompt: "Identify the vertex (h, k) and direction of opening (a = -1):",
+                    options: [
+                        "Vertex at (4, -4), opens upwards",
+                        "Vertex at (-4, 4), opens downwards",
+                        "Vertex at (-4, -4), opens downwards because a < 0",
+                        "Vertex at (-4, -4), opens upwards"
+                    ],
+                    correct: 2 // C
+                },
+                step3: {
+                    tag: "Step 3: Range Determination",
+                    prompt: "Since the parabola has maximum value at y = -4 and opens down, state the range:",
+                    options: [
+                        "Range: {y ∈ ℝ | y ≤ -4}",
+                        "Range: {y ∈ ℝ | y ≥ -4}",
+                        "Range: {y ∈ ℝ}",
+                        "Range: {y ∈ ℝ | y ≤ 0}"
+                    ],
+                    correct: 0 // A
+                },
+                rationale: "<b>Step 1:</b> All quadratics have Domain = {x ∈ ℝ}.<br><b>Step 2:</b> Vertex form a(x - h)^2 + k gives vertex (-4, -4) with a = -1 (opens down).<br><b>Step 3:</b> Maximum y-value is -4, so Range = {y ∈ ℝ | y ≤ -4}."
+            },
+            // Card 10: 4a
+            {
+                id: 10,
+                desmosLatex: 'y=-7x+5',
+                title: "Card 10 (Question 4a): Inverse of y = -7x + 5 by Reversing Operations",
+                problem: "Determine the inverse of the linear function y = -7x + 5 by reversing operations.",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Identify Operations on x",
+                    prompt: "List the forward operations applied to x in y = -7x + 5:",
+                    options: [
+                        "Multiply by -7, then add 5",
+                        "Add 5, then multiply by -7",
+                        "Subtract 5, then divide by -7",
+                        "Divide by -7, then add 5"
+                    ],
+                    correct: 0 // A
+                },
+                step2: {
+                    tag: "Step 2: Reverse the Operations",
+                    prompt: "State the inverse operations in exact reverse order:",
+                    options: [
+                        "Add 5, then multiply by -7",
+                        "Multiply by 7, then subtract 5",
+                        "Subtract 5, then divide by -7",
+                        "Divide by 5, then subtract 7"
+                    ],
+                    correct: 2 // C
+                },
+                step3: {
+                    tag: "Step 3: Formulate Inverse Equation",
+                    prompt: "Apply the reversed operations to input x: (x - 5) / (-7):",
+                    options: [
+                        "y = (x + 5) / 7",
+                        "y = (5 - x) / 7  or  y = -1/7 x + 5/7",
+                        "y = 7x - 5",
+                        "y = -7x - 5"
+                    ],
+                    correct: 1 // B
+                },
+                rationale: "<b>Step 1:</b> Forward: x is multiplied by -7, then 5 is added.<br><b>Step 2:</b> Reverse: subtract 5 from x, then divide by -7.<br><b>Step 3:</b> y = (x - 5) / (-7) = (5 - x) / 7 = -1/7 x + 5/7."
+            },
+            // Card 11: 4b
+            {
+                id: 11,
+                desmosLatex: 'y=1-9x',
+                title: "Card 11 (Question 4b): Inverse of y = 1 - 9x by Reversing Operations",
+                problem: "Determine the inverse of the linear function y = 1 - 9x by reversing operations.",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Identify Operations on x",
+                    prompt: "Rewrite as y = -9x + 1 and identify forward operations on x:",
+                    options: [
+                        "Subtract 1, then multiply by 9",
+                        "Multiply by -9, then add 1",
+                        "Add 1, then divide by -9",
+                        "Multiply by 9, then subtract 1"
+                    ],
+                    correct: 1 // B
+                },
+                step2: {
+                    tag: "Step 2: Reverse the Operations",
+                    prompt: "Reverse the operations on input x in reverse order:",
+                    options: [
+                        "Subtract 1, then divide by -9",
+                        "Add 1, then multiply by -9",
+                        "Divide by 9, then add 1",
+                        "Multiply by -9, then subtract 1"
+                    ],
+                    correct: 0 // A
+                },
+                step3: {
+                    tag: "Step 3: Formulate Inverse Equation",
+                    prompt: "Apply the reversed operations: (x - 1) / (-9):",
+                    options: [
+                        "y = 9x - 1",
+                        "y = (x + 1) / 9",
+                        "y = (1 - x) / 9  or  y = -1/9 x + 1/9",
+                        "y = -9x + 1"
+                    ],
+                    correct: 2 // C
+                },
+                rationale: "<b>Step 1:</b> Forward operations: multiply by -9, then add 1.<br><b>Step 2:</b> Reverse operations: subtract 1, then divide by -9.<br><b>Step 3:</b> y = (x - 1) / (-9) = (1 - x) / 9."
+            },
+            // Card 12: 5a
+            {
+                id: 12,
+                desmosLatex: 'y=x',
+                title: "Card 12 (Question 5a): Inverse of Identity Function f(x) = x by Interchanging Variables",
+                problem: "Determine the inverse of the linear function f(x) = x by interchanging the variables.",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Replace Function Notation",
+                    prompt: "Express the linear function using y: y = x. Interchange variables x and y:",
+                    options: [
+                        "x = -y",
+                        "x = y",
+                        "y = 1/x",
+                        "x = 0"
+                    ],
+                    correct: 1 // B
+                },
+                step2: {
+                    tag: "Step 2: Solve for y",
+                    prompt: "Isolate y in terms of x:",
+                    options: [
+                        "y = x",
+                        "y = -x",
+                        "y = 0",
+                        "y = 1"
+                    ],
+                    correct: 0 // A
+                },
+                step3: {
+                    tag: "Step 3: Geometric Meaning",
+                    prompt: "What does f^(-1)(x) = x indicate about the line y = x?",
+                    options: [
+                        "It is perpendicular to the line of reflection.",
+                        "It has no inverse.",
+                        "It is its own reflection across the line y = x (self-inverse).",
+                        "It is horizontal."
+                    ],
+                    correct: 2 // C
+                },
+                rationale: "<b>Step 1:</b> Replace f(x) with y: y = x. Swap x and y: x = y.<br><b>Step 2:</b> Solving for y gives y = x, so f^(-1)(x) = x.<br><b>Step 3:</b> The line y = x is the axis of reflection, making it its own inverse."
+            },
+            // Card 13: 5b
+            {
+                id: 13,
+                desmosLatex: 'f(x)=(4-x)/5',
+                title: "Card 13 (Question 5b): Inverse of f(x) = (4 - x)/5 by Interchanging Variables",
+                problem: "Determine the inverse of the linear function f(x) = (4 - x)/5 by interchanging the variables.",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Interchange Variables",
+                    prompt: "Write y = (4 - x)/5 and swap x and y:",
+                    options: [
+                        "x = (4 - y) / 5",
+                        "y = (4 - x) / 5",
+                        "x = (y - 4) / 5",
+                        "5x = 4 - x"
+                    ],
+                    correct: 0 // A
+                },
+                step2: {
+                    tag: "Step 2: Clear Denominator",
+                    prompt: "Multiply both sides by 5 to isolate terms with y:",
+                    options: [
+                        "5x = 4 + y",
+                        "5x = 4 - y",
+                        "x = 4 - 5y",
+                        "5x = y - 4"
+                    ],
+                    correct: 1 // B
+                },
+                step3: {
+                    tag: "Step 3: Solve for y",
+                    prompt: "Isolate y: y = 4 - 5x. State the inverse function f^(-1)(x):",
+                    options: [
+                        "f^(-1)(x) = 5x - 4",
+                        "f^(-1)(x) = 5x + 4",
+                        "f^(-1)(x) = 4 - 5x  or  -5x + 4",
+                        "f^(-1)(x) = (5x - 4) / 5"
+                    ],
+                    correct: 2 // C
+                },
+                rationale: "<b>Step 1:</b> Swap variables: x = (4 - y)/5.<br><b>Step 2:</b> Multiply by 5: 5x = 4 - y.<br><b>Step 3:</b> Rearrange: y = 4 - 5x. Hence, f^(-1)(x) = 4 - 5x."
+            },
+            // Card 14: 6a
+            {
+                id: 14,
+                desmosLatex: 'y=-3(x-3)^2+3',
+                title: "Card 14 (Question 6a): Equation of Transformed Parabola from Graph",
+                problem: "In the graph, parent function f(x) = x^2 (black) has undergone transformations to form the gray parabola. Determine its equation.",
+                graphSVG: generateGridSVG([
+                    { type: 'curve', fn: x => x * x, min: -2.2, max: 2.2, color: '#0f172a', width: 2 },
+                    { type: 'curve', fn: x => -3 * Math.pow(x - 3, 2) + 3, min: 1.3, max: 4.7, color: '#64748b', width: 2.5 }
+                ], [-5, 5], [-5, 5]),
+                step1: {
+                    tag: "Step 1: Identify Transformed Vertex",
+                    prompt: "Read the vertex coordinates (h, k) and opening direction of the gray parabola:",
+                    options: [
+                        "Vertex at (3, 3), opens upwards",
+                        "Vertex at (3, 3), opens downwards (reflection in x-axis, a < 0)",
+                        "Vertex at (-3, 3), opens downwards",
+                        "Vertex at (0, 3), opens downwards"
+                    ],
+                    correct: 1 // B
+                },
+                step2: {
+                    tag: "Step 2: Determine Vertical Stretch Factor a",
+                    prompt: "From vertex (3, 3), a horizontal step of 1 unit to x = 2 or x = 4 causes y to decrease by 3 units (from 3 to 0). Find a:",
+                    options: [
+                        "a = -1",
+                        "a = -2",
+                        "a = -3",
+                        "a = 3"
+                    ],
+                    correct: 2 // C
+                },
+                step3: {
+                    tag: "Step 3: Write Transformed Equation",
+                    prompt: "Substitute a = -3, h = 3, k = 3 into vertex form y = a(x - h)^2 + k:",
+                    options: [
+                        "y = -3(x - 3)^2 + 3",
+                        "y = -3(x + 3)^2 + 3",
+                        "y = -(x - 3)^2 + 3",
+                        "y = -3(x - 3)^2 - 3"
+                    ],
+                    correct: 0 // A
+                },
+                rationale: "<b>Step 1:</b> The gray parabola has vertex (3, 3) and opens downwards.<br><b>Step 2:</b> Standard parabola steps are 1, 4, 9. Here 1 unit step gives 3 units drop, so vertical stretch factor is a = -3.<br><b>Step 3:</b> Equation: y = -3(x - 3)^2 + 3."
+            },
+            // Card 15: 6b
+            {
+                id: 15,
+                desmosLatex: 'y=|x+1|-3',
+                title: "Card 15 (Question 6b): Equation of Transformed Absolute Value from Graph",
+                problem: "In the graph, parent function f(x) = |x| (black) has undergone transformations to form the gray V-shape. Determine its equation.",
+                graphSVG: generateGridSVG([
+                    { type: 'curve', fn: x => Math.abs(x), min: -4.5, max: 4.5, color: '#0f172a', width: 2 },
+                    { type: 'curve', fn: x => Math.abs(x + 1) - 3, min: -4.5, max: 4.5, color: '#64748b', width: 2.5 }
+                ], [-5, 5], [-5, 5]),
+                step1: {
+                    tag: "Step 1: Identify Transformed Vertex",
+                    prompt: "Read the vertex coordinates (h, k) of the gray absolute value curve:",
+                    options: [
+                        "Vertex at (1, -3)",
+                        "Vertex at (-1, 3)",
+                        "Vertex at (-1, -3)",
+                        "Vertex at (-3, -1)"
+                    ],
+                    correct: 2 // C
+                },
+                step2: {
+                    tag: "Step 2: Determine Stretch / Slope Factor",
+                    prompt: "Inspect the slope of the right arm from (-1, -3) to (0, -2) and (2, 0):",
+                    options: [
+                        "Slope is m = 1 (no vertical stretch, a = 1)",
+                        "Slope is m = 2 (vertical stretch by 2)",
+                        "Slope is m = -1 (reflected in x-axis)",
+                        "Slope is m = 1/2"
+                    ],
+                    correct: 0 // A
+                },
+                step3: {
+                    tag: "Step 3: Write Transformed Equation",
+                    prompt: "Substitute a = 1, h = -1, k = -3 into y = a|x - h| + k:",
+                    options: [
+                        "y = |x - 1| - 3",
+                        "y = |x + 1| - 3",
+                        "y = 2|x + 1| - 3",
+                        "y = |x + 1| + 3"
+                    ],
+                    correct: 1 // B
+                },
+                rationale: "<b>Step 1:</b> The vertex has shifted 1 unit left and 3 units down: (h, k) = (-1, -3).<br><b>Step 2:</b> The slope of the branches remains ±1, so there is no vertical stretch (a = 1).<br><b>Step 3:</b> The equation is y = |x + 1| - 3."
+            },
+            // Card 16: 7a
+            {
+                id: 16,
+                desmosLatex: 'y=(-3(x+1))^2+5',
+                title: "Card 16 (Question 7a): Transformed Quadratic Equation",
+                problem: "The graph of f(x) = x^2 is compressed horizontally by a factor of 1/3, reflected in the y-axis, and translated 1 unit left and 5 units up. Write its equation.",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Horizontal Parameters (k and d)",
+                    prompt: "Horizontal compression by 1/3 and reflection in y-axis means k = -3. Translation 1 unit left means d = -1. Formulate k(x - d):",
+                    options: [
+                        "-3(x - 1)",
+                        "-1/3(x + 1)",
+                        "-3(x + 1)",
+                        "3(x + 1)"
+                    ],
+                    correct: 2 // C
+                },
+                step2: {
+                    tag: "Step 2: Vertical Parameter (c)",
+                    prompt: "Translation 5 units up gives vertical translation parameter c:",
+                    options: [
+                        "c = -5",
+                        "c = 5",
+                        "c = 1",
+                        "c = 0"
+                    ],
+                    correct: 1 // B
+                },
+                step3: {
+                    tag: "Step 3: Combine into Transformed Function",
+                    prompt: "Substitute into y = [k(x - d)]^2 + c:",
+                    options: [
+                        "y = [-3(x + 1)]^2 + 5  (or y = 9(x + 1)^2 + 5)",
+                        "y = [-3(x - 1)]^2 + 5",
+                        "y = -3(x + 1)^2 + 5",
+                        "y = [1/3(x + 1)]^2 + 5"
+                    ],
+                    correct: 0 // A
+                },
+                rationale: "<b>Step 1:</b> Horizontal compression by 1/3 and reflection across y-axis gives k = -3. Translation left 1 means (x + 1).<br><b>Step 2:</b> Up 5 gives + 5.<br><b>Step 3:</b> Combined equation: y = [-3(x + 1)]^2 + 5, which also simplifies to 9(x + 1)^2 + 5."
+            },
+            // Card 17: 7b
+            {
+                id: 17,
+                desmosLatex: 'y=-2|x-2|-1',
+                title: "Card 17 (Question 7b): Transformed Absolute Value Equation",
+                problem: "The graph of y = |x| is stretched vertically by a factor of 2, reflected in the x-axis, and translated 2 units right and 1 unit down. Write its equation.",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Vertical Parameter (a)",
+                    prompt: "Vertical stretch by 2 and reflection in x-axis gives vertical coefficient a:",
+                    options: [
+                        "a = 2",
+                        "a = -2",
+                        "a = -1/2",
+                        "a = 1/2"
+                    ],
+                    correct: 1 // B
+                },
+                step2: {
+                    tag: "Step 2: Translations (d and c)",
+                    prompt: "Translation 2 units right (d = 2) and 1 unit down (c = -1):",
+                    options: [
+                        "d = -2, c = 1",
+                        "d = 2, c = 1",
+                        "d = -2, c = -1",
+                        "d = 2, c = -1"
+                    ],
+                    correct: 3 // D
+                },
+                step3: {
+                    tag: "Step 3: Combine into Transformed Function",
+                    prompt: "Substitute into y = a|x - d| + c:",
+                    options: [
+                        "y = -2|x - 2| - 1",
+                        "y = 2|x - 2| - 1",
+                        "y = -2|x + 2| - 1",
+                        "y = -2|x - 2| + 1"
+                    ],
+                    correct: 0 // A
+                },
+                rationale: "<b>Step 1:</b> Reflection in x-axis and vertical stretch by 2 gives a = -2.<br><b>Step 2:</b> 2 units right means (x - 2); 1 unit down means - 1.<br><b>Step 3:</b> Equation: y = -2|x - 2| - 1."
+            },
+            // Card 18: 7c
+            {
+                id: 18,
+                desmosLatex: 'y=1/(3(x+3))+2',
+                title: "Card 18 (Question 7c): Transformed Rational Equation",
+                problem: "The graph of y = 1/x is compressed horizontally by a factor of 1/3, and translated 3 units left and 2 units up. Write its equation.",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Horizontal Parameters (k and d)",
+                    prompt: "Horizontal compression by 1/3 gives k = 3. Translation 3 units left gives d = -3:",
+                    options: [
+                        "k(x - d) = 1/3(x + 3)",
+                        "k(x - d) = 3(x - 3)",
+                        "k(x - d) = 3(x + 3)",
+                        "k(x - d) = -3(x + 3)"
+                    ],
+                    correct: 2 // C
+                },
+                step2: {
+                    tag: "Step 2: Vertical Parameter (c)",
+                    prompt: "Translation 2 units up gives vertical shift c:",
+                    options: [
+                        "c = -2",
+                        "c = 2",
+                        "c = 3",
+                        "c = 1/3"
+                    ],
+                    correct: 1 // B
+                },
+                step3: {
+                    tag: "Step 3: Combine into Transformed Function",
+                    prompt: "Substitute into y = 1 / [k(x - d)] + c:",
+                    options: [
+                        "y = 1 / [3(x - 3)] + 2",
+                        "y = 3 / (x + 3) + 2",
+                        "y = 1 / (x + 3) + 2",
+                        "y = 1 / [3(x + 3)] + 2"
+                    ],
+                    correct: 3 // D
+                },
+                rationale: "<b>Step 1:</b> Compression by 1/3 gives k = 3. 3 units left gives (x + 3).<br><b>Step 2:</b> Up 2 gives + 2.<br><b>Step 3:</b> Equation: y = 1 / [3(x + 3)] + 2."
+            },
+            // Card 19: 7d
+            {
+                id: 19,
+                desmosLatex: 'y=3\\sqrt{-(x+4)}-3',
+                title: "Card 19 (Question 7d): Transformed Radical Equation",
+                problem: "The graph of y = √x is stretched vertically by a factor of 3, reflected in the y-axis, and translated 4 units left and 3 units down. Write its equation.",
+                graphSVG: null,
+                step1: {
+                    tag: "Step 1: Vertical Parameter (a)",
+                    prompt: "Vertical stretch by a factor of 3 without vertical reflection gives:",
+                    options: [
+                        "a = 3",
+                        "a = -3",
+                        "a = 1/3",
+                        "a = -1/3"
+                    ],
+                    correct: 0 // A
+                },
+                step2: {
+                    tag: "Step 2: Horizontal Parameters (k and d)",
+                    prompt: "Reflection in y-axis (k = -1) and translation 4 units left (d = -4):",
+                    options: [
+                        "k(x - d) = -(x - 4)",
+                        "k(x - d) = -(x + 4)",
+                        "k(x - d) = (x + 4)",
+                        "k(x - d) = -x + 4"
+                    ],
+                    correct: 1 // B
+                },
+                step3: {
+                    tag: "Step 3: Combine into Transformed Function",
+                    prompt: "Include vertical shift 3 units down (c = -3) in y = a√[k(x - d)] + c:",
+                    options: [
+                        "y = -3√[-(x + 4)] - 3",
+                        "y = 3√[-(x - 4)] - 3",
+                        "y = 3√[-(x + 4)] - 3",
+                        "y = 3√[-(x + 4)] + 3"
+                    ],
+                    correct: 2 // C
+                },
+                rationale: "<b>Step 1:</b> Vertical stretch by 3 gives a = 3.<br><b>Step 2:</b> Reflection in y-axis gives k = -1; 4 units left gives -(x + 4).<br><b>Step 3:</b> 3 units down gives - 3. Equation: y = 3√[-(x + 4)] - 3."
+            }
+        ];
+
+        let currentUser = null;
+        let currentQIndex = 0;
+        let userState = { answers: {}, status: {}, cardSteps: {} };
+        let desmosCalc = null;
+
+        function initDesmos() {
+            const elt = document.getElementById('desmos-calculator');
+            if (elt && !desmosCalc && window.Desmos) {
+                desmosCalc = Desmos.GraphingCalculator(elt, {
+                    expressions: true,
+                    keypad: false,
+                    settingsMenu: false
+                });
+            }
+            if (desmosCalc && questionsData[currentQIndex].desmosLatex) {
+                desmosCalc.setBlank();
+                desmosCalc.setExpression({ id: 'fn', latex: questionsData[currentQIndex].desmosLatex });
+            }
+        }
+
+        function calcInput(val) {
+            const d = document.getElementById('calc-disp');
+            if (d.value === '0' || d.value === 'Error') d.value = val;
+            else d.value += val;
+        }
+
+        function calcClear() {
+            document.getElementById('calc-disp').value = '0';
+        }
+
+        function calcEval() {
+            const d = document.getElementById('calc-disp');
+            try {
+                d.value = eval(d.value);
+            } catch(e) {
+                d.value = 'Error';
+            }
+        }
+
+        function calcSqrt() {
+            const d = document.getElementById('calc-disp');
+            try {
+                const val = parseFloat(d.value) || 0;
+                d.value = Number(Math.sqrt(val).toFixed(4));
+            } catch(e) {
+                d.value = 'Error';
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value.trim();
+            if (email) {
+                currentUser = email;
+                localStorage.setItem('bm_niyati_email', email);
+                initSession();
+            }
+        }
+
+        function initSession() {
+            document.getElementById('display-user-email').innerText = currentUser;
+            document.getElementById('user-header-info').style.display = 'flex';
+
+            const savedData = localStorage.getItem(`${currentUser}_${CHAPTER_KEY}`);
+            if (savedData) {
+                userState = JSON.parse(savedData);
+            } else {
+                userState = { answers: {}, status: {}, cardSteps: {} };
+            }
+
+            switchScreen('quiz-screen');
+            renderGrid();
+            loadQuestion(0);
+            setTimeout(initDesmos, 300);
+        }
+
+        function logout() {
+            localStorage.removeItem('bm_niyati_email');
+            currentUser = null;
+            document.getElementById('user-header-info').style.display = 'none';
+            switchScreen('auth-screen');
+        }
+
+        function saveState() {
+            if (currentUser) {
+                localStorage.setItem(`${currentUser}_${CHAPTER_KEY}`, JSON.stringify(userState));
+            }
+        }
+
+        function switchScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('question-grid');
+            grid.innerHTML = '';
+            questionsData.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'grid-btn';
+                btn.innerText = idx + 1;
+
+                if (idx === currentQIndex) btn.classList.add('active');
+                if (userState.status[idx] === 'submitted') btn.classList.add('attempted');
+                if (userState.status[idx] === 'skipped') btn.classList.add('skipped');
+
+                btn.onclick = () => jumpToQuestion(idx);
+                grid.appendChild(btn);
+            });
+        }
+
+        function loadQuestion(index) {
+            currentQIndex = index;
+            const q = questionsData[index];
+
+            document.getElementById('q-number-badge').innerText = `Card ${index + 1} of ${questionsData.length}`;
+            document.getElementById('q-title-text').innerHTML = q.title;
+            document.getElementById('q-problem-text').innerHTML = q.problem;
+
+            const graphContainer = document.getElementById('q-graph-container');
+            if (q.graphSVG) {
+                graphContainer.innerHTML = q.graphSVG;
+                graphContainer.style.display = 'flex';
+            } else {
+                graphContainer.style.display = 'none';
+                graphContainer.innerHTML = '';
+            }
+
+            if (!userState.cardSteps[index]) {
+                userState.cardSteps[index] = {
+                    s1Selection: null, s1Status: 'unattempted',
+                    s2Selection: null, s2Status: 'unattempted',
+                    s3Selection: null, s3Status: 'unattempted'
+                };
+            }
+
+            const cState = userState.cardSteps[index];
+
+            renderStepUI(1, q.step1, cState.s1Selection, cState.s1Status, true);
+            const isStep1Passed = cState.s1Status === 'correct' || cState.s1Status === 'skipped';
+            renderStepUI(2, q.step2, cState.s2Selection, cState.s2Status, isStep1Passed);
+            const isStep2Passed = cState.s2Status === 'correct' || cState.s2Status === 'skipped';
+            renderStepUI(3, q.step3, cState.s3Selection, cState.s3Status, isStep2Passed);
+
+            const isCardFinished = userState.status[index] === 'submitted' || userState.status[index] === 'skipped';
+            const ratBox = document.getElementById('rationale-container');
+
+            if (isCardFinished) {
+                ratBox.style.display = 'block';
+                document.getElementById('rationale-text').innerHTML = q.rationale;
+                document.getElementById('skip-card-btn').style.display = 'none';
+                document.getElementById('next-btn').style.display = 'inline-flex';
+            } else {
+                ratBox.style.display = 'none';
+                document.getElementById('skip-card-btn').style.display = 'inline-flex';
+                document.getElementById('next-btn').style.display = 'none';
+            }
+
+            if (desmosCalc && q.desmosLatex) {
+                desmosCalc.setBlank();
+                desmosCalc.setExpression({ id: 'fn', latex: q.desmosLatex });
+            }
+
+            renderGrid();
+        }
+
+        function renderStepUI(stepNum, stepData, currentSelection, currentStatus, isUnlocked) {
+            const block = document.getElementById(`step${stepNum}-block`);
+            const container = document.getElementById(`step${stepNum}-options-container`);
+            const tag = document.getElementById(`step${stepNum}-status-tag`);
+            const prompt = document.getElementById(`step${stepNum}-prompt`);
+            const tagLabel = document.getElementById(`step${stepNum}-tag`);
+            const actions = document.getElementById(`step${stepNum}-actions`);
+            
+            container.innerHTML = '';
+            tagLabel.innerText = stepData.tag;
+            prompt.innerHTML = stepData.prompt;
+
+            if (!isUnlocked) {
+                block.className = 'step-block locked';
+                tag.innerText = 'Locked';
+                tag.style.color = 'var(--text-muted)';
+                actions.style.display = 'none';
+                return;
+            }
+
+            if (currentStatus === 'correct') {
+                block.className = 'step-block completed-step';
+                tag.innerText = '✓ Correct';
+                tag.style.color = 'var(--correct-green)';
+                actions.style.display = 'none';
+            } else if (currentStatus === 'skipped') {
+                block.className = 'step-block skipped-step';
+                tag.innerText = 'Skipped';
+                tag.style.color = 'var(--skipped-orange)';
+                actions.style.display = 'none';
+            } else {
+                block.className = 'step-block active-step';
+                tag.innerText = 'In Progress';
+                tag.style.color = 'var(--accent-gold)';
+                actions.style.display = 'flex';
+            }
+
+            stepData.options.forEach((optText, idx) => {
+                const item = document.createElement('div');
+                item.className = 'step-option-item';
+
+                if (currentSelection === idx) item.classList.add('selected');
+
+                if (currentStatus === 'correct' || currentStatus === 'skipped') {
+                    item.classList.add('disabled');
+                    if (idx === stepData.correct) item.classList.add('correct');
+                    else if (currentSelection === idx) item.classList.add('incorrect');
+                } else if (currentStatus === 'incorrect' && currentSelection === idx) {
+                    item.classList.add('incorrect');
+                    item.onclick = () => selectStepOption(stepNum, idx);
+                } else {
+                    item.onclick = () => selectStepOption(stepNum, idx);
+                }
+
+                item.innerHTML = `<div class="step-opt-prefix">${String.fromCharCode(65 + idx)}</div><div>${optText}</div>`;
+                container.appendChild(item);
+            });
+        }
+
+        function selectStepOption(stepNum, idx) {
+            const cState = userState.cardSteps[currentQIndex];
+            if (stepNum === 1) {
+                if (cState.s1Status === 'correct' || cState.s1Status === 'skipped') return;
+                cState.s1Selection = idx;
+                cState.s1Status = 'unattempted';
+            } else if (stepNum === 2) {
+                if (cState.s2Status === 'correct' || cState.s2Status === 'skipped') return;
+                cState.s2Selection = idx;
+                cState.s2Status = 'unattempted';
+            } else if (stepNum === 3) {
+                if (cState.s3Status === 'correct' || cState.s3Status === 'skipped') return;
+                cState.s3Selection = idx;
+                cState.s3Status = 'unattempted';
+            }
+            saveState();
+            loadQuestion(currentQIndex);
+        }
+
+        function checkStep(stepNum) {
+            const q = questionsData[currentQIndex];
+            const cState = userState.cardSteps[currentQIndex];
+
+            if (stepNum === 1) {
+                if (cState.s1Selection === null) {
+                    alert("Please select an option for Step 1 first!");
+                    return;
+                }
+                if (cState.s1Selection === q.step1.correct) {
+                    cState.s1Status = 'correct';
+                    AudioFX.playCorrectBell();
+                } else {
+                    cState.s1Status = 'incorrect';
+                    AudioFX.playIncorrectBell();
+                }
+            } else if (stepNum === 2) {
+                if (cState.s2Selection === null) {
+                    alert("Please select an option for Step 2 first!");
+                    return;
+                }
+                if (cState.s2Selection === q.step2.correct) {
+                    cState.s2Status = 'correct';
+                    AudioFX.playCorrectBell();
+                } else {
+                    cState.s2Status = 'incorrect';
+                    AudioFX.playIncorrectBell();
+                }
+            } else if (stepNum === 3) {
+                if (cState.s3Selection === null) {
+                    alert("Please select an option for Step 3 first!");
+                    return;
+                }
+                if (cState.s3Selection === q.step3.correct) {
+                    cState.s3Status = 'correct';
+                    userState.status[currentQIndex] = 'submitted';
+                    userState.answers[currentQIndex] = cState.s3Selection;
+                    AudioFX.playCorrectBell();
+                } else {
+                    cState.s3Status = 'incorrect';
+                    AudioFX.playIncorrectBell();
+                }
+            }
+            saveState();
+            loadQuestion(currentQIndex);
+        }
+
+        function skipStep(stepNum) {
+            const cState = userState.cardSteps[currentQIndex];
+            if (stepNum === 1) {
+                cState.s1Status = 'skipped';
+                AudioFX.playSkipChime();
+            } else if (stepNum === 2) {
+                cState.s2Status = 'skipped';
+                AudioFX.playSkipChime();
+            } else if (stepNum === 3) {
+                cState.s3Status = 'skipped';
+                userState.status[currentQIndex] = 'submitted';
+                AudioFX.playSkipChime();
+            }
+            saveState();
+            loadQuestion(currentQIndex);
+        }
+
+        function skipEntireCard() {
+            const cState = userState.cardSteps[currentQIndex];
+            cState.s1Status = 'skipped';
+            cState.s2Status = 'skipped';
+            cState.s3Status = 'skipped';
+            userState.status[currentQIndex] = 'skipped';
+            saveState();
+            AudioFX.playSkipChime();
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQIndex < questionsData.length - 1) {
+                loadQuestion(currentQIndex + 1);
+            } else {
+                finishTest();
+            }
+        }
+
+        function jumpToQuestion(idx) {
+            loadQuestion(idx);
+        }
+
+        function finishTest() {
+            switchScreen('review-screen');
+            let score = 0;
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+
+            questionsData.forEach((q, idx) => {
+                const status = userState.status[idx];
+                const cState = userState.cardSteps[idx] || {};
+                const isFullyCorrect = cState.s1Status === 'correct' && cState.s2Status === 'correct' && cState.s3Status === 'correct';
+
+                if (isFullyCorrect) score++;
+
+                const card = document.createElement('div');
+                card.className = 'review-card';
+
+                let tagHtml = '<span class="status-tag tag-skipped">Skipped</span>';
+                if (status === 'submitted') {
+                    tagHtml = isFullyCorrect 
+                        ? '<span class="status-tag tag-correct">Fully Correct</span>' 
+                        : '<span class="status-tag tag-incorrect">Completed with Help</span>';
+                }
+
+                const s3Answer = cState.s3Selection !== null ? q.step3.options[cState.s3Selection] : 'None';
+                const s3Correct = q.step3.options[q.step3.correct];
+
+                card.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+                        <strong>${q.title}</strong>
+                        ${tagHtml}
+                    </div>
+                    <p style="font-size:0.9rem; margin-bottom:0.5rem;">${q.problem}</p>
+                    <p style="font-size:0.9rem; color:var(--text-muted);">
+                        <strong>Your Step 3 Answer:</strong> ${s3Answer} | 
+                        <strong>Correct Answer:</strong> ${s3Correct}
+                    </p>
+                    <div style="margin-top:0.5rem; font-size:0.85rem; background:#f8fafc; padding:0.5rem; border-radius:4px;">
+                        <strong>Solution:</strong> ${q.rationale}
+                    </div>
+                `;
+                reviewList.appendChild(card);
+            });
+
+            document.getElementById('final-score').innerText = `${score} / ${questionsData.length}`;
+        }
+
+        function restartQuiz() {
+            userState = { answers: {}, status: {}, cardSteps: {} };
+            saveState();
+            startQuizScreen();
+        }
+
+        window.onload = function() {
+            const savedUser = localStorage.getItem('bm_niyati_email');
+            if (savedUser) {
+                currentUser = savedUser;
+                initSession();
+            }
+        };
+    </script>
+</body>
+</html>
